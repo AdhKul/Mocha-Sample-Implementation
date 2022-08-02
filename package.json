@@ -1,0 +1,27 @@
+{
+  "name": "mocha-ex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "hello.js",
+  "scripts": {
+    "test": "mocha --exit",
+    "coverage": "nyc --reporter html --reporter text npm test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "chai-http": "^4.3.0",
+    "express": "^4.18.1",
+    "querystring": "^0.2.1",
+    "supertest": "^6.2.4"
+  },
+  "devDependencies": {
+    "casual": "^1.6.2",
+    "chai": "^4.3.6",
+    "istanbul": "^0.4.5",
+    "mocha": "^10.0.0",
+    "nyc": "^15.1.0",
+    "sinon": "^14.0.0"
+  }
+}
