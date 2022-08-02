@@ -22,7 +22,7 @@ describe("user login", () => {
 			});
 	});
 
-	it("should reject login of wrong password of actual user", (done) => {
+	it("should not login if credentials are wrong", (done) => {
 		request(app)
 			.post("/login")
 			.send(
@@ -38,7 +38,7 @@ describe("user login", () => {
 			.end(done);
 	});
 
-	it("should reject login of non existent user", async () => {
+	it("should not login if user does not exist", async () => {
 		//another way of writing async mocha test(async).
 		const response = await request(app) //async and await
 			.post("/login")
@@ -68,7 +68,7 @@ describe("user registration", () => {
 		users.pop();
 	});
 
-	it("reject registration if user is already there", async () => {
+	it("should not register if user is already there", async () => {
 		const response = await request(app)
 			.post("/register")
 			.send(
