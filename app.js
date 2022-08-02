@@ -31,6 +31,7 @@ app.post("/register", async (req, res) => {
 				password: req.body.password,
 			};
 			users.push(newUser);
+			console.log("test");
 			res.status(200).send(
 				"<div align ='center'><h2>Registration successful</h2></div><br><br><div align='center'><a href='./login.html'>login</a></div><br><br><div align='center'><a href='./registration.html'>Register another user</a></div>"
 			);
