@@ -4,6 +4,19 @@ const app = require("../app");
 const users = require("../data").userDB;
 const casual = require("casual");
 
+describe("home page loading", () => {
+	it("home page should load fine", (done) => {
+		request(app)
+			.get("/")
+			.end((err, res) => {
+				expect(res.status).to.equal(200);
+				expect(err).to.be.null;
+				expect(res).to.not.be.null;
+				done();
+			});
+	});
+});
+
 describe("user login", () => {
 	it("Should login correct user", (done) => {
 		// one way of writing async mocha test (done).
