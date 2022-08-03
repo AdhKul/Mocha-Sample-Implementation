@@ -2,10 +2,16 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const bodyParser = require("body-parser");
+const { isNull } = require("util");
 const users = require("./data").userDB;
 
 const app = express();
 const server = http.createServer(app);
+
+function validateEmail(email) {
+	var re = /\S+@\S+\.\S+/;
+	return re.test(email);
+}
 
 app.use(
 	bodyParser.urlencoded({
@@ -22,6 +28,15 @@ app.get("/", (req, res) => {
 
 app.post("/register", async (req, res) => {
 	try {
+		if (Object.keys(req.body).length === 0) {
+			res.status(403).send("Request is empty");
+		}
+		if (req.body.email == null) {
+			res.status(404).send("no email specified");
+		}
+		if (!validateEmail(req.body.email)) {
+			res.status(405).send("email format not correct");
+		}
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (!foundUser) {
 			let newUser = {
@@ -46,6 +61,15 @@ app.post("/register", async (req, res) => {
 
 app.post("/login", async (req, res) => {
 	try {
+		if (Object.keys(req.body).length === 0) {
+			res.status(403).send("Request is empty");
+		}
+		if (req.body.email == null) {
+			res.status(404).send("no email specified");
+		}
+		if (!validateEmail(req.body.email)) {
+			res.status(405).send("email format not correct");
+		}
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (foundUser) {
 			let submittedPass = req.body.password;
@@ -72,6 +96,15 @@ app.post("/login", async (req, res) => {
 
 app.post("/update", async (req, res) => {
 	try {
+		if (Object.keys(req.body).length === 0) {
+			res.status(403).send("Request is empty");
+		}
+		if (req.body.email == null) {
+			res.status(404).send("no email specified");
+		}
+		if (!validateEmail(req.body.email)) {
+			res.status(405).send("email format not correct");
+		}
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (foundUser) {
 			const index = users.findIndex((user) => {
@@ -95,6 +128,15 @@ app.post("/update", async (req, res) => {
 
 app.post("/delete", async (req, res) => {
 	try {
+		if (Object.keys(req.body).length === 0) {
+			res.status(403).send("Request is empty");
+		}
+		if (req.body.email == null) {
+			res.status(404).send("no email specified");
+		}
+		if (!validateEmail(req.body.email)) {
+			res.status(405).send("email format not correct");
+		}
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (foundUser) {
 			if (foundUser.password === req.body.password) {
