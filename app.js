@@ -29,14 +29,16 @@ app.post("/register", async (req, res) => {
 	try {
 		if (Object.keys(req.body).length === 0) {
 			res.status(403).send("Request is empty");
+			return;
 		}
 		if (req.body.email == null) {
 			res.status(404).send("no email specified");
+			return;
 		}
 		if (!validateEmail(req.body.email)) {
 			res.status(405).send("email format not correct");
+			return;
 		}
-		console.log("hello");
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (!foundUser) {
 			let newUser = {
@@ -49,13 +51,16 @@ app.post("/register", async (req, res) => {
 			res.status(200).send(
 				"<div align ='center'><h2>Registration successful</h2></div><br><br><div align='center'><a href='./login.html'>login</a></div><br><br><div align='center'><a href='./registration.html'>Register another user</a></div>"
 			);
+			return;
 		} else {
 			res.status(401).send(
 				"<div align ='center'><h2>Email already used</h2></div><br><br><div align='center'><a href='./registration.html'>Register again</a></div>"
 			);
+			return;
 		}
 	} catch {
 		res.status(400).send("Internal server error");
+		return;
 	}
 });
 
@@ -63,12 +68,15 @@ app.post("/login", async (req, res) => {
 	try {
 		if (Object.keys(req.body).length === 0) {
 			res.status(403).send("Request is empty");
+			return;
 		}
 		if (req.body.email == null) {
 			res.status(404).send("no email specified");
+			return;
 		}
 		if (!validateEmail(req.body.email)) {
 			res.status(405).send("email format not correct");
+			return;
 		}
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (foundUser) {
@@ -79,18 +87,22 @@ app.post("/login", async (req, res) => {
 				res.status(200).send(
 					`<div align ='center'><h2>login successful</h2></div><br><br><br><div align ='center'><h3>Hello ${usrname}</h3></div><br><br><div align='center'><a href='./login.html'>logout</a></div>`
 				);
+				return;
 			} else {
 				res.status(401).send(
 					"<div align ='center'><h2>Invalid email or password</h2></div><br><br><div align ='center'><a href='./login.html'>login again</a></div>"
 				);
+				return;
 			}
 		} else {
 			res.status(402).send(
 				"<div align ='center'><h2> user not found</h2></div><br><br><div align='center'><a href='./login.html'>login again<a><div>"
 			);
+			return;
 		}
 	} catch {
 		res.status(400).send("Internal server error");
+		return;
 	}
 });
 
@@ -98,12 +110,15 @@ app.post("/update", async (req, res) => {
 	try {
 		if (Object.keys(req.body).length === 0) {
 			res.status(403).send("Request is empty");
+			return;
 		}
 		if (req.body.email == null) {
 			res.status(404).send("no email specified");
+			return;
 		}
 		if (!validateEmail(req.body.email)) {
 			res.status(405).send("email format not correct");
+			return;
 		}
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (foundUser) {
@@ -114,18 +129,22 @@ app.post("/update", async (req, res) => {
 				res.status(200).send(
 					`<div align ='center'><h2>update successful</h2></div><br><br><br><div align ='center'><h3>Hello ${req.body.username}</h3></div><br><br><div align='center'><a href='./login.html'>logout</a></div>`
 				);
+				return;
 			} else {
 				res.status(402).send(
 					"<div align ='center'><h2> credentials wrong</h2></div><br><br><div align='center'><a href='./update.html'>go back<a><div>"
 				);
+				return;
 			}
 		} else {
 			res.status(401).send(
 				"<div align ='center'><h2> user not found</h2></div><br><br><div align='center'><a href='./update.html'>go back<a><div>"
 			);
+			return;
 		}
 	} catch {
 		res.status(400).send("Internal server error");
+		return;
 	}
 });
 
@@ -133,12 +152,15 @@ app.post("/delete", async (req, res) => {
 	try {
 		if (Object.keys(req.body).length === 0) {
 			res.status(403).send("Request is empty");
+			return;
 		}
 		if (req.body.email == null) {
 			res.status(404).send("no email specified");
+			return;
 		}
 		if (!validateEmail(req.body.email)) {
 			res.status(405).send("email format not correct");
+			return;
 		}
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (foundUser) {
@@ -152,18 +174,22 @@ app.post("/delete", async (req, res) => {
 				res.status(200).send(
 					`<div align ='center'><h2>delete successful</h2></div><br><br><br><div align ='center'><div align='center'><a href='./login.html'>go back</a></div>`
 				);
+				return;
 			} else {
 				res.status(402).send(
 					"<div align ='center'><h2> credentials wrong</h2></div><br><br><div align='center'><a href='./delete.html'>go back<a><div>"
 				);
+				return;
 			}
 		} else {
 			res.status(401).send(
 				"<div align ='center'><h2> user not found</h2></div><br><br><div align='center'><a href='./delete.html'>go back<a><div>"
 			);
+			return;
 		}
 	} catch {
 		res.status(400).send("Internal server error");
+		return;
 	}
 });
 

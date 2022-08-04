@@ -32,14 +32,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>36/36</span>
+                <span class='fraction'>38/38</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">92.3% </span>
+                <span class="strong">91.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/13</span>
+                <span class='fraction'>11/12</span>
             </div>
         
             
@@ -234,8 +234,10 @@
 <a name='L169'></a><a href='#L169'>169</a>
 <a name='L170'></a><a href='#L170'>170</a>
 <a name='L171'></a><a href='#L171'>171</a>
-<a name='L172'></a><a href='#L172'>172</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a>
+<a name='L175'></a><a href='#L175'>175</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -245,8 +247,8 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -273,6 +275,7 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -331,25 +334,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -409,7 +415,6 @@
 const http = require("http");
 const path = require("path");
 const bodyParser = require("body-parser");
-const { isNull } = require("util");
 const users = require("./data").userDB;
 &nbsp;
 const app = express();
@@ -444,6 +449,7 @@ app.post("/register", async (req, res) =&gt; {
 		if (!validateEmail(req.body.email)) {
 			res.status(405).send("email format not correct");
 		}
+		console.log("hello");
 		let foundUser = users.find((data) =&gt; req.body.email === data.email);
 		if (!foundUser) {
 			let newUser = {
@@ -514,15 +520,18 @@ app.post("/update", async (req, res) =&gt; {
 		}
 		let foundUser = users.find((data) =&gt; req.body.email === data.email);
 		if (foundUser) {
-			const index = users.findIndex((user) =&gt; {
-				return req.body.email === user.email;
-			});
-			users[index].username = req.body.username;
-			users[index].email = req.body.email;
-			users[index].password = req.body.password;
-			res.status(200).send(
-				`&lt;div align ='center'&gt;&lt;h2&gt;update successful&lt;/h2&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;div align ='center'&gt;&lt;h3&gt;Hello ${req.body.username}&lt;/h3&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;&lt;div align='center'&gt;&lt;a href='./login.html'&gt;logout&lt;/a&gt;&lt;/div&gt;`
-			);
+			if (foundUser.password === req.body.oldPassword) {
+				foundUser.username = req.body.username;
+				foundUser.email = req.body.email;
+				foundUser.password = req.body.password;
+				res.status(200).send(
+					`&lt;div align ='center'&gt;&lt;h2&gt;update successful&lt;/h2&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;div align ='center'&gt;&lt;h3&gt;Hello ${req.body.username}&lt;/h3&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;&lt;div align='center'&gt;&lt;a href='./login.html'&gt;logout&lt;/a&gt;&lt;/div&gt;`
+				);
+			} else {
+				res.status(402).send(
+					"&lt;div align ='center'&gt;&lt;h2&gt; credentials wrong&lt;/h2&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;&lt;div align='center'&gt;&lt;a href='./update.html'&gt;go back&lt;a&gt;&lt;div&gt;"
+				);
+			}
 		} else {
 			res.status(401).send(
 				"&lt;div align ='center'&gt;&lt;h2&gt; user not found&lt;/h2&gt;&lt;/div&gt;&lt;br&gt;&lt;br&gt;&lt;div align='center'&gt;&lt;a href='./update.html'&gt;go back&lt;a&gt;&lt;div&gt;"
@@ -583,7 +592,7 @@ module.exports = app;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-08-03T17:42:12.757Z
+                at 2022-08-04T12:10:21.094Z
             </div>
         <script src="prettify.js"></script>
         <script>
