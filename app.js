@@ -36,6 +36,7 @@ app.post("/register", async (req, res) => {
 		if (!validateEmail(req.body.email)) {
 			res.status(405).send("email format not correct");
 		}
+		console.log("hello");
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (!foundUser) {
 			let newUser = {
