@@ -2,7 +2,6 @@ const express = require("express");
 const http = require("http");
 const path = require("path");
 const bodyParser = require("body-parser");
-const { isNull } = require("util");
 const users = require("./data").userDB;
 
 const app = express();
@@ -107,15 +106,18 @@ app.post("/update", async (req, res) => {
 		}
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (foundUser) {
-			const index = users.findIndex((user) => {
-				return req.body.email === user.email;
-			});
-			users[index].username = req.body.username;
-			users[index].email = req.body.email;
-			users[index].password = req.body.password;
-			res.status(200).send(
-				`<div align ='center'><h2>update successful</h2></div><br><br><br><div align ='center'><h3>Hello ${req.body.username}</h3></div><br><br><div align='center'><a href='./login.html'>logout</a></div>`
-			);
+			if (foundUser.password === req.body.oldPassword) {
+				foundUser.username = req.body.username;
+				foundUser.email = req.body.email;
+				foundUser.password = req.body.password;
+				res.status(200).send(
+					`<div align ='center'><h2>update successful</h2></div><br><br><br><div align ='center'><h3>Hello ${req.body.username}</h3></div><br><br><div align='center'><a href='./login.html'>logout</a></div>`
+				);
+			} else {
+				res.status(402).send(
+					"<div align ='center'><h2> credentials wrong</h2></div><br><br><div align='center'><a href='./update.html'>go back<a><div>"
+				);
+			}
 		} else {
 			res.status(401).send(
 				"<div align ='center'><h2> user not found</h2></div><br><br><div align='center'><a href='./update.html'>go back<a><div>"

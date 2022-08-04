@@ -190,9 +190,10 @@ describe("user registration", () => {
 });
 
 describe("update user details", () => {
-	it("should upddate users details correctly", (done) => {
+	it("should upddate user details correctly", (done) => {
 		const dummyUser = {
 			email: users[0].email,
+			oldPassword: users[0].password,
 			password: casual.password,
 			username: casual.first_name,
 		};
@@ -209,6 +210,25 @@ describe("update user details", () => {
 			});
 	});
 
+	it("should not upddate user details if credentials are wrong", (done) => {
+		request(app)
+			.post("/update")
+			.send(
+				new URLSearchParams({
+					email: users[0].email,
+					username: casual.first_name,
+					oldPassword: casual.password,
+					password: casual.password,
+				}).toString()
+			)
+			.end((err, res) => {
+				expect(err).to.be.null;
+				expect(res).to.not.be.null;
+				expect(res.status).to.equal(402);
+				done();
+			});
+	});
+
 	it("should not update if the user does not exist", (done) => {
 		request(app)
 			.post("/update")
@@ -217,6 +237,7 @@ describe("update user details", () => {
 					email: casual.email,
 					name: casual.first_name,
 					password: casual.password,
+					oldPassword: casual.password,
 				}).toString()
 			)
 			.end((err, res) => {
@@ -311,7 +332,7 @@ describe("delete user", () => {
 			});
 	});
 
-	it("should not delete user if user is not found", (done) => {
+	it("should not delete user if user does not exist", (done) => {
 		request(app)
 			.post("/delete")
 			.send(
