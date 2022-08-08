@@ -120,7 +120,6 @@ app.post("/update", async (req, res) => {
 			res.status(405).send("email format not correct");
 			return;
 		}
-		console.log("hello");
 		let foundUser = users.find((data) => req.body.email === data.email);
 		if (foundUser) {
 			if (foundUser.password === req.body.oldPassword) {
