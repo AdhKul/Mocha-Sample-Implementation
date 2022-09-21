@@ -19,7 +19,6 @@ describe("home page loading", () => {
 
 describe("user login", () => {
 	it("Should login correct user", (done) => {
-		// one way of writing async mocha test (done).
 		request(app)
 			.post("/login")
 			.send(
@@ -32,7 +31,7 @@ describe("user login", () => {
 				expect(err).to.be.null;
 				expect(res.status).to.equal(200);
 				expect(res).to.not.be.null;
-				done(); //don't forget to call done()
+				done(); 
 			});
 	});
 
