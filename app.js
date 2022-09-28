@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 app.post("/register", async (req, res) => {
 	try {
 		if (Object.keys(req.body).length === 0) {
-			res.status(403).send("Request is empty");
+			res.status(407).send("Request is empty");
 			return;
 		}
 		if (req.body.email == null) {
